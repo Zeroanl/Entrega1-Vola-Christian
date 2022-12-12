@@ -1,0 +1,41 @@
+{% extends "Familia/base.html" %}
+{% load static %}
+{% load bootstrap5 %}
+
+{% block content %}
+
+
+
+
+{% block cuerpo %}
+<div class="container" style="color:white">
+   <div class="row">
+     <div class="col">
+      <h1>CARGAR UN TRABAJO</h1>
+     </div>
+     </div>
+     <div class="row">
+     <div class="col">
+       
+      {% if actualizartrabajo %}
+          <form action="{% url  'actualizar_action_trabajo' %}" method="post">
+      {% else %}     
+          <form action="{% url  'agregartrabajo'%}" method="post">
+      {% endif %}
+
+      {% csrf_token %} 
+      {% bootstrap_form form %}
+    
+      {% if actualizartrabajo %}
+        {% bootstrap_button "Actualizar" button_type="submit" button_class="btn-primary" %} 
+      {% else %}
+        {% bootstrap_button "Guardar" button_type="submit" button_class="btn-primary" %}
+      {% endif %}
+      
+      </form>
+     </div>
+   </div>
+ </div>
+{% endblock %}
+
+{% endblock %}

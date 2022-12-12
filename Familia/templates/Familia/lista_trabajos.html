@@ -1,0 +1,63 @@
+{% extends "Familia/base.html" %}
+{% load static %}
+{% load bootstrap5 %}
+
+{% block content %}
+
+{% block cuerpo %}
+<div class="container" style="color:white">    
+
+  {% if resultados_busqueda %}
+    <h1>Resultados de la busqueda</h1>
+  {%endif%}
+  
+  <div class="row">
+    <div class="col">
+      {% url 'agregartrabajo' as agregar_url %}
+      {% url 'buscartrabajo' as buscar_url %}
+      {% bootstrap_button "Agregar" button_class="btn-success" button_type="link" href=agregar_url %} 
+      {% bootstrap_button "Buscar" button_class="btn-success" button_type="link" href=buscar_url %}  
+    <div>
+  <div>
+
+  <div class="row">
+    <div class="col">
+        {% if trabajos %}
+        <table class="zui-table">
+            <thead>
+            
+                <th scope="col">Rubro de Trabajo</th>
+                <th scope="col">Nombre</th>
+                <th scope="col">Trabajador</th>
+                <th scope="col">Acciones</th>
+
+               
+            </thead>
+        
+            {% for t in trabajos %}
+            <tbody>
+                <tr>
+                
+                    <td> {{t.tipo_trabajo}} </td>
+                    <td> {{t.trabajo}} </td>
+                    <td> {{t.trabajador}} </td>
+                    <td>
+                      {% url 'borrartrabajo' identificador=t.id as borrartrabajo_url %}
+                      {% url 'actualizartrabajo' identificador=t.id as actualizartrabajo_url %} 
+                      {% bootstrap_button "Borrar" size="sm" button_class="btn-danger" button_type="link" href=borrartrabajo_url %}
+                      {% bootstrap_button "Actualizar" size="sm" button_class="btn-warning" button_type="link" href=actualizartrabajo_url %}
+
+                    </td>
+                </tr>
+            </tbody>
+            {% endfor %}
+        </table>
+        {% else %}
+            <p>No tienes trabajos cargadas</p>
+        {% endif %}
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% endblock %}

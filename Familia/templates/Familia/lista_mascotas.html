@@ -1,0 +1,63 @@
+{% extends "Familia/base.html" %}
+{% load static %}
+{% load bootstrap5 %}
+
+{% block content %}
+
+{% block cuerpo %}
+<div class="container" style="color:white">    
+
+  {% if resultados_busqueda %}
+    <h1>Resultados de la busqueda</h1>
+  {%endif%}
+  
+  <div class="row">
+    <div class="col">
+      {% url 'agregarmascota' as agregar_url %}
+      {% url 'buscarmascota' as buscar_url %}
+      {% bootstrap_button "Agregar" button_class="btn-success" button_type="link" href=agregar_url %} 
+      {% bootstrap_button "Buscar" button_class="btn-success" button_type="link" href=buscar_url %}  
+    <div>
+  <div>
+
+  <div class="row">
+    <div class="col">
+        {% if mascotas %}
+        <table class="zui-table">
+            <thead>
+            
+                <th scope="col">Clase de Animal</th>
+                <th scope="col">Nombre</th>
+                <th scope="col">Dueño</th>
+                <th scope="col">Acciones</th>
+
+               
+            </thead>
+        
+            {% for m in mascotas %}
+            <tbody>
+                <tr>
+                
+                    <td> {{m.clase_animal}} </td>
+                    <td> {{m.nombre}} </td>
+                    <td> {{m.dueño}} </td>
+                    <td>
+                      {% url 'borrarmascota' identificador=m.id as borrarmascota_url %}
+                      {% url 'actualizarmascota' identificador=m.id as actualizarmascota_url %} 
+                      {% bootstrap_button "Borrar" size="sm" button_class="btn-danger" button_type="link" href=borrarmascota_url %}
+                      {% bootstrap_button "Actualizar" size="sm" button_class="btn-warning" button_type="link" href=actualizarmascota_url %}
+
+                    </td>
+                </tr>
+            </tbody>
+            {% endfor %}
+        </table>
+        {% else %}
+            <p>No tienes mascotas cargadas</p>
+        {% endif %}
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% endblock %}
